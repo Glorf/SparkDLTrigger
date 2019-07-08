@@ -63,10 +63,9 @@ Driver machine should have iptables setup so that:
     * It accepts connections to and from jupyter notebook, at least regarding the client computer (but keep in mind that notebooks are protected by token when run outside of localhost anyway)
 
     There should be also docker service installed and running there.\
-You should have connection to your selected k8s cluster configured, then copy access files (config, ca.crt, user.crt, user.key) to one directory, say ~/kubeconfig\
+You should have connection to your selected k8s cluster configured, then run kubectl proxy to pass the authenticated connection to the spark driver. \
 To run the driver, perform:\
-`docker run -v ~/kubeconfig:/opt/kubernetes --network="host" gitlab-registry.cern.ch/mbien/spark-artifactory/spark-driver-image/spark-py:1.0`\
-The volume mount is crucial - spark k8s settings does not allow driver running outside of cluster yet, so we cannot provide the data using settings in ipynb.
+`docker run --network="host" gitlab-registry.cern.ch/mbien/spark-artifactory/spark-driver-image/spark-py:1.0`
 
 1) Run notebook
 
