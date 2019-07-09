@@ -67,10 +67,13 @@ You should have connection to your selected k8s cluster configured, then run kub
 To run the driver, perform:\
 `docker run --network="host" gitlab-registry.cern.ch/mbien/spark-artifactory/spark-driver-image/spark-py:1.0`
 
+1) Prepare core-site.xml file\
+Due to problems with passing parameters in runtime from spark driver to executors, you should prepare your own core-site.xml file and feed it to environment using sparkContext.addFile. Docker containers are configured the way they will detect core-site.xml file in their workdir and apply configuration to their hadoop clients. The sample core-site.xml file can be found in this directory.
+
 1) Run notebook
 
-    Prepare session\
-Fill missing configuration and run spark session.\
+Prepare session\
+Fill missing configuration, upload files, and run spark session.\
 Wait for kubernetes pods to populate \
-Run the notebook of your choice \
+Run the workflow of your choice \
 Enjoy!
