@@ -32,7 +32,7 @@ We need to enrich pyspark image with some spicy additions.\
 This is in theory entirely possible to do so using spark configuration jars, packages and files flags. But extensive tests show that in the current version of spark client mode on k8s its better to just put everything into the image (it'd have to be downloaded anyway...) For python packages we use `pip install` for java ones, we simply download them from maven repo using `wget`\
     * numpy
     * sklearn
-    * BigDL (both java lib and python wrapper, copied local copy to container)
+    * BigDL (both java lib and python wrapper downloaded from mvn central)
     * org.apache.hadoop:hadoop-aws:3.2.0
     * com.amazonaws:aws-java-sdk-bundle:1.11.375 (hadoop-aws dependency)
     * spark-root_2.11-0.1.17.jar (downladed from: https://github.com/diana-hep/spark-root)
