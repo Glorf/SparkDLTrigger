@@ -21,9 +21,7 @@
     Run the following script to start the compilation:\
     `./dev/make-distribution.sh --pip --tgz  -Phadoop-3.1 -Dhadoop.version=3.2.0 -Dcurator.version=2.12.0 -Dzookeeper.version=3.4.13 -Pyarn -Pkubernetes`
 
-    * Prepare spark docker image and push it to the artifactory of your choice\
-    `./bin/docker-image-tool.sh -r <registry url> -t <build-tag> build`\
-    `./bin/docker-image-tool.sh -r <registry url> -t <build-tag> push`\
+    * Copy `dist` directory to `spark-base-image` folder (BEWARE: due to incompability between musl and bigdl, this distribution uses custom spark Dockerfile and entrypoint). Prepare spark docker image and push it to the artifactory of your choice\
     Prebuilt image (feel free to use it): \
     `gitlab-registry.cern.ch/mbien/spark-artifactory/spark-base-image/spark-py:1.0`
 
@@ -65,7 +63,7 @@ Driver machine should have iptables setup so that:
     * It accepts connections to and from jupyter notebook, at least regarding the client computer (but keep in mind that notebooks are protected by token when run outside of localhost anyway)
 
     There should be also docker service installed and running there.\
-You should have connection to your selected k8s cluster configured, then run kubectl proxy to pass the authenticated connection to the spark driver. \
+You should have connection to your selected k8s cluster configured, then run `kubectl proxy` to pass the authenticated connection to the spark driver. \
 To run the driver, perform:\
 `docker run --network="host" gitlab-registry.cern.ch/mbien/spark-artifactory/spark-driver-image/spark-py:1.0`
 
