@@ -73,6 +73,15 @@ Due to problems with passing parameters in runtime from spark driver to executor
 1) Run notebook
 
 Prepare session\
+Tune the config. If you want to run spark_dasboard as a monitoring tool, you might consider using:
+`        .config("spark.metrics.conf.driver.sink.graphite.class","org.apache.spark.metrics.sink.GraphiteSink")\
+        .config("spark.metrics.conf.executor.sink.graphite.class","org.apache.spark.metrics.sink.GraphiteSink")\
+        .config("spark.metrics.conf.*.sink.graphite.host", "188.184.30.32")\
+        .config("spark.metrics.conf.*.sink.graphite.port", "31733")\
+        .config("spark.metrics.conf.*.sink.graphite.period", "10")\
+        .config("spark.metrics.conf.*.sink.graphite.unit", "seconds")\
+        .config("spark.metrics.conf.*.sink.graphite.prefix", "graphite")\
+        .config("spark.metrics.conf.*.source.jvm.class","org.apache.spark.metrics.source.JvmSource")\`
 Fill missing configuration, upload files, and run spark session.\
 Wait for kubernetes pods to populate \
 Run the workflow of your choice \
