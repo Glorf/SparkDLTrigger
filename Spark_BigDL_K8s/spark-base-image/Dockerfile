@@ -1,17 +1,18 @@
-FROM openjdk:8-jre
+FROM cern/cc7-base:latest
 
 ARG img_path=kubernetes/dockerfiles
 ARG k8s_tests=kubernetes/tests
 
 RUN set -ex && \
-    apt-get update && apt-get upgrade -y && apt-get install python3 python3-pip -y && apt-get clean && \
-    pip3 --no-cache install --upgrade pip setuptools && \
+    yum update -y && yum clean all && yum install java-1.8.0-openjdk -y && \
     mkdir -p /opt/spark && \
     touch /opt/spark/RELEASE && \
     rm /bin/sh && \
     ln -sv /bin/bash /bin/sh && \
     echo "auth required pam_wheel.so use_uid" >> /etc/pam.d/su && \
     chgrp root /etc/passwd && chmod ug+rw /etc/passwd
+
+RUN yum clean all
 
 COPY dist/jars /opt/spark/jars
 COPY dist/bin /opt/spark/bin

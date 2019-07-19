@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: gitlab-registry.cern.ch/mbien/spark-artifactory/spark-driver-image/spark-py
+  tag: 1.0
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: LoadBalancer
+  port: 8888
+  lbSourceRange: "128.141.0.0/16"
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

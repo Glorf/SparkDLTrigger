@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pyspark-notebook.fullname" . }}
+  labels:
+{{ include "pyspark-notebook.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  {{- if and .Values.service.lbSourceRange (eq .Values.service.type "LoadBalancer") }}
+  loadBalancerSourceRanges:
+  - {{ .Values.service.lbSourceRange }} 
+  {{- end }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "pyspark-notebook.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
