@@ -1,4 +1,4 @@
-FROM gitlab-registry.cern.ch/mbien/spark-artifactory/spark-executor-image/spark-py:1.0
+FROM gitlab-registry.cern.ch/mbien/spark-artifactory/spark-executor-image/spark3:1.1
 
 RUN pip3 install --upgrade --no-cache-dir six && pip3 install --no-cache-dir jupyter ipython #sparkmonitor
 

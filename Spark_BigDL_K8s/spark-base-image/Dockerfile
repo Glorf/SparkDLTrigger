@@ -1,10 +1,10 @@
-FROM cern/cc7-base:latest
+FROM cern/cc7-base:20190724
 
 ARG img_path=kubernetes/dockerfiles
 ARG k8s_tests=kubernetes/tests
 
 RUN set -ex && \
-    yum update -y && yum clean all && yum install java-1.8.0-openjdk -y && \
+    yum update -y && yum clean all && yum install java-1.8.0-openjdk-headless -y && \
     mkdir -p /opt/spark && \
     touch /opt/spark/RELEASE && \
     rm /bin/sh && \
@@ -14,19 +14,19 @@ RUN set -ex && \
 
 RUN yum clean all
 
-COPY dist/jars /opt/spark/jars
-COPY dist/bin /opt/spark/bin
-COPY dist/sbin /opt/spark/sbin
+COPY dist_luca/jars /opt/spark/jars
+COPY dist_luca/bin /opt/spark/bin
+COPY dist_luca/sbin /opt/spark/sbin
 COPY entrypoint.sh /opt/
-COPY dist/examples /opt/spark/examples
-COPY dist/${k8s_tests} /opt/spark/tests
-COPY dist/data /opt/spark/data
+COPY dist_luca/examples /opt/spark/examples
+COPY dist_luca/${k8s_tests} /opt/spark/tests
+COPY dist_luca/data /opt/spark/data
 
 ENV SPARK_HOME /opt/spark
 
 RUN mkdir ${SPARK_HOME}/python
 
-COPY dist/python/lib /opt/spark/python/lib
+COPY dist_luca/python/lib /opt/spark/python/lib
 ENV PYTHONPATH /opt/spark/python/lib/pyspark.zip:/opt/spark/python/lib/py4j-*.zip
 
 WORKDIR /opt/spark/work-dir
